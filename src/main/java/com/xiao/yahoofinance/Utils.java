@@ -1,5 +1,8 @@
 package com.xiao.yahoofinance;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -12,9 +15,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TimeZone;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 public class Utils {
 
@@ -26,6 +26,7 @@ public class Utils {
     public static final BigDecimal BILLION = new BigDecimal(1000000000);
 
     public static String join(String[] data, String d) {
+
         if (data.length == 0) {
             return "";
         }
@@ -39,22 +40,26 @@ public class Utils {
     }
 
     private static String cleanNumberString(String data) {
+
         return Utils.join(data.trim().split(","), "");
     }
 
     private static boolean isParseable(String data) {
+
         return !(data == null || data.equals("N/A") || data.equals("-")
-                || data.equals("") || data.equals("nan"));
+                 || data.equals("") || data.equals("nan"));
     }
 
     public static String getString(String data) {
-        if(!Utils.isParseable(data)) {
+
+        if (!Utils.isParseable(data)) {
             return null;
         }
         return data;
     }
 
     public static BigDecimal getBigDecimal(String data) {
+
         BigDecimal result = null;
         if (!Utils.isParseable(data)) {
             return result;
@@ -86,15 +91,17 @@ public class Utils {
     }
 
     public static BigDecimal getBigDecimal(String dataMain, String dataSub) {
+
         BigDecimal main = getBigDecimal(dataMain);
         BigDecimal sub = getBigDecimal(dataSub);
-        if(main == null || main.compareTo(BigDecimal.ZERO) == 0) {
+        if (main == null || main.compareTo(BigDecimal.ZERO) == 0) {
             return sub;
         }
         return main;
     }
 
     public static double getDouble(String data) {
+
         double result = Double.NaN;
         if (!Utils.isParseable(data)) {
             return result;
@@ -126,6 +133,7 @@ public class Utils {
     }
 
     public static Integer getInt(String data) {
+
         Integer result = null;
         if (!Utils.isParseable(data)) {
             return result;
@@ -141,6 +149,7 @@ public class Utils {
     }
 
     public static Long getLong(String data) {
+
         Long result = null;
         if (!Utils.isParseable(data)) {
             return result;
@@ -156,14 +165,16 @@ public class Utils {
     }
 
     public static BigDecimal getPercent(BigDecimal numerator, BigDecimal denominator) {
+
         if (denominator == null || numerator == null || denominator.compareTo(BigDecimal.ZERO) == 0) {
             return BigDecimal.ZERO;
         }
         return numerator.divide(denominator, 4, RoundingMode.HALF_EVEN)
-                .multiply(HUNDRED).setScale(2, RoundingMode.HALF_EVEN);
+                        .multiply(HUNDRED).setScale(2, RoundingMode.HALF_EVEN);
     }
 
     public static double getPercent(double numerator, double denominator) {
+
         if (denominator == 0) {
             return 0;
         }
@@ -171,6 +182,7 @@ public class Utils {
     }
 
     private static String getDividendDateFormat(String date) {
+
         if (date.matches("[0-9][0-9]-...-[0-9][0-9]")) {
             return "dd-MMM-yy";
         } else if (date.matches("[0-9]-...-[0-9][0-9]")) {
@@ -190,6 +202,7 @@ public class Utils {
      * @return Calendar object representing the parsed date
      */
     public static Calendar parseDividendDate(String date) {
+
         if (!Utils.isParseable(date)) {
             return null;
         }
@@ -225,12 +238,13 @@ public class Utils {
      * Used to parse the last trade date / time. Returns null if the date / time
      * cannot be parsed.
      *
-     * @param date String received that represents the date
-     * @param time String received that represents the time
+     * @param date     String received that represents the date
+     * @param time     String received that represents the time
      * @param timeZone time zone to use for parsing the date time
      * @return Calendar object with the parsed datetime
      */
     public static Calendar parseDateTime(String date, String time, TimeZone timeZone) {
+
         String datetime = date + " " + time;
         SimpleDateFormat format = new SimpleDateFormat("M/d/yyyy h:mma", Locale.US);
 
@@ -249,6 +263,7 @@ public class Utils {
     }
 
     public static Calendar parseHistDate(String date) {
+
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         try {
             if (Utils.isParseable(date)) {
@@ -264,6 +279,7 @@ public class Utils {
     }
 
     public static Calendar unixToCalendar(long timestamp) {
+
         log.debug("unixToCalendar " + timestamp);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(timestamp * 1000);
@@ -271,6 +287,7 @@ public class Utils {
     }
 
     public static String getURLParameters(Map<String, String> params) {
+
         StringBuilder sb = new StringBuilder();
 
         for (Entry<String, String> entry : params.entrySet()) {
@@ -299,10 +316,12 @@ public class Utils {
      * @return the stripped line
      */
     public static String stripOverhead(String line) {
+
         return line.replaceAll("\"", "");
     }
 
     public static String unescape(String data) {
+
         StringBuilder buffer = new StringBuilder(data.length());
         for (int i = 0; i < data.length(); i++) {
             if ((int) data.charAt(i) > 256) {

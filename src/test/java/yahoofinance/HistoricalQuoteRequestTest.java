@@ -12,7 +12,10 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 
 public class HistoricalQuoteRequestTest extends MockedServersTest {
@@ -22,6 +25,7 @@ public class HistoricalQuoteRequestTest extends MockedServersTest {
 
     @BeforeEach
     public void setup() {
+
         today = Calendar.getInstance();
         today.set(Calendar.YEAR, 2016);
         today.set(Calendar.MONTH, 8);
@@ -33,12 +37,13 @@ public class HistoricalQuoteRequestTest extends MockedServersTest {
 
     @Test
     public void historicalQuoteTest() throws IOException {
+
         Stock goog = YahooFinance.get("GOOG", from, today);
 
         assertNotNull(goog.getHistory());
         assertEquals(13, goog.getHistory().size());
 
-        for(HistoricalQuote histQuote : goog.getHistory()) {
+        for (HistoricalQuote histQuote : goog.getHistory()) {
             assertEquals("GOOG", histQuote.getSymbol());
             assertTrue(histQuote.getAdjClose().compareTo(BigDecimal.ZERO) > 0);
             assertTrue(histQuote.getClose().compareTo(BigDecimal.ZERO) > 0);
@@ -65,6 +70,7 @@ public class HistoricalQuoteRequestTest extends MockedServersTest {
 
     @Test
     public void intervalTest() throws IOException {
+
         Stock tsla = YahooFinance.get("TSLA", from, today, Interval.DAILY);
         Stock scty = YahooFinance.get("SCTY", from, today, Interval.WEEKLY);
         Stock goog = YahooFinance.get("GOOG", from, today, Interval.MONTHLY);
@@ -76,6 +82,7 @@ public class HistoricalQuoteRequestTest extends MockedServersTest {
 
     @Test
     public void multiYearTest() throws IOException {
+
         Calendar from = (Calendar) today.clone();
         Calendar to = (Calendar) today.clone();
         from.add(Calendar.YEAR, -5); // from 5 years ago
@@ -98,7 +105,8 @@ public class HistoricalQuoteRequestTest extends MockedServersTest {
 
     @Test
     public void multiStockTest() throws IOException {
-        String[] symbols = new String[] {"INTC", "AIR.PA"};
+
+        String[] symbols = new String[]{ "INTC", "AIR.PA" };
         Map<String, Stock> stocks = YahooFinance.get(symbols, from, today);
         Stock intel = stocks.get("INTC");
         Stock airbus = stocks.get("AIR.PA");
@@ -111,6 +119,7 @@ public class HistoricalQuoteRequestTest extends MockedServersTest {
 
     @Test
     public void historicalFlowTest() throws IOException {
+
         Stock goog = YahooFinance.get("GOOG");
         int requestCount = MockedServersTest.histQuotesServer.getRequestCount();
         assertNotNull(goog.getHistory(from, today));
@@ -130,6 +139,7 @@ public class HistoricalQuoteRequestTest extends MockedServersTest {
 
     @Test
     public void impossibleRequestTest() throws IOException {
+
         Calendar from = Calendar.getInstance();
         Calendar to = Calendar.getInstance();
         from.add(Calendar.DATE, 2); // from > to

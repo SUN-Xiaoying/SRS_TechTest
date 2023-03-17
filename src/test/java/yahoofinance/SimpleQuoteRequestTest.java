@@ -1,7 +1,6 @@
 package yahoofinance;
 
 import org.junit.jupiter.api.Test;
-
 import yahoofinance.mock.MockedServersTest;
 
 import java.io.IOException;
@@ -9,13 +8,16 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 
 public class SimpleQuoteRequestTest extends MockedServersTest {
 
     @Test
     public void europeStockQuoteTest() throws IOException {
+
         Stock stock = YahooFinance.get("AIR.PA");
 
         assertEquals("AIR.PA", stock.getSymbol());
@@ -86,6 +88,7 @@ public class SimpleQuoteRequestTest extends MockedServersTest {
 
     @Test
     public void usStockQuoteTest() throws IOException {
+
         Stock stock = YahooFinance.get("INTC");
 
         assertEquals("INTC", stock.getSymbol());
@@ -120,6 +123,7 @@ public class SimpleQuoteRequestTest extends MockedServersTest {
 
     @Test
     public void singaporeStockQuoteTest() throws IOException {
+
         Stock stock = YahooFinance.get("C6L.SI");
 
         assertEquals("C6L.SI", stock.getSymbol());

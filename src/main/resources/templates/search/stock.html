@@ -9,26 +9,24 @@
 </head>
 <body>
     <div class="container main-container py-5 text-center">
-        <h4>[[${stock.name}]]</h4>
-        <table class="table table-light table-striped">
+        <table>
+            <thead>
             <tr>
-                <td>
-                    Price
-                </td>
-                <td>
-                    [[${stock.quote.price}]]
-                </td>
+                <td>Date</td>
+                <td>Open</td>
+                <td>Close</td>
             </tr>
-            <tr>
-                <td>
-                    Bid
-                </td>
-                <td>
-                    [[${stock.quote.bid}]]
-                </td>
-            </tr>
-
+            </thead>
+            <tbody>
+                <tr th:each="quote: ${quotes}">
+                    <td th:text="${quote.date}" />
+                    <td th:text="${quote.open}" />
+                    <td th:text="${quote.close}"/>
+                </tr>
+            </tbody>
         </table>
     </div>
 </body>
+<!-- Footer -->
+<div th:insert="~{components/footer :: footer}"></div>
 </html>

@@ -8,13 +8,15 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 public class QuoteRequestFlowTest extends MockedServersTest {
 
     @Test
     public void quoteRefreshTest() throws IOException {
+
         Stock stock = YahooFinance.get("TSLA");
 
         assertEquals(new BigDecimal("226.16"), stock.getQuote().getPrice());
@@ -30,6 +32,7 @@ public class QuoteRequestFlowTest extends MockedServersTest {
 
     @Test
     public void statsRefreshTest() throws IOException {
+
         Stock stock = YahooFinance.get("AIR.PA");
 
         assertEquals(new BigDecimal("13.47"), stock.getStats().getPe());
@@ -45,6 +48,7 @@ public class QuoteRequestFlowTest extends MockedServersTest {
 
     @Test
     public void dividendRefreshTest() throws IOException {
+
         Stock stock = YahooFinance.get("INTC");
 
         assertEquals(new BigDecimal("1.04"), stock.getDividend().getAnnualYield());
@@ -60,7 +64,8 @@ public class QuoteRequestFlowTest extends MockedServersTest {
 
     @Test
     public void multipleQuoteRequestTest() throws IOException {
-        Map<String, Stock> stocks = YahooFinance.get(new String[]{"AIR.PA", "INTC", "C6L.SI"});
+
+        Map<String, Stock> stocks = YahooFinance.get(new String[]{ "AIR.PA", "INTC", "C6L.SI" });
         assertTrue(stocks.containsKey("AIR.PA"));
         assertTrue(stocks.containsKey("INTC"));
         assertTrue(stocks.containsKey("C6L.SI"));

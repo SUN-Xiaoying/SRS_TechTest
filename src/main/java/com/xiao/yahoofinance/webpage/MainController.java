@@ -10,8 +10,10 @@ import java.io.IOException;
 
 @Controller
 public class MainController {
-    @GetMapping("/")
+
+    @GetMapping("/stock")
     public String showMeTheMoney(Model model) throws IOException {
+
         Stock stock = YahooFinance.get("INTC");
         model.addAttribute("stock", stock);
         return "stock";

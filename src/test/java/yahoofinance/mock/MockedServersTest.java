@@ -2,7 +2,6 @@ package yahoofinance.mock;
 
 import okhttp3.mockwebserver.Dispatcher;
 import okhttp3.mockwebserver.MockWebServer;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +20,8 @@ public class MockedServersTest {
 
     @BeforeEach
     public void startServers() {
-        if(started) {
+
+        if (started) {
             return;
         }
         started = true;

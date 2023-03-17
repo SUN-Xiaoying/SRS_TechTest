@@ -1,5 +1,11 @@
 package com.xiao.yahoofinance.histquotes;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import yahoofinance.Utils;
+import yahoofinance.YahooFinance;
+import yahoofinance.util.RedirectableRequest;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,13 +17,6 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import yahoofinance.Utils;
-import yahoofinance.YahooFinance;
-import yahoofinance.util.RedirectableRequest;
 
 
 public class HistQuotesRequest {
@@ -35,22 +34,27 @@ public class HistQuotesRequest {
     static {
         DEFAULT_FROM.add(Calendar.YEAR, -1);
     }
+
     public static final Calendar DEFAULT_TO = Calendar.getInstance();
     public static final Interval DEFAULT_INTERVAL = Interval.MONTHLY;
 
     public HistQuotesRequest(String symbol) {
+
         this(symbol, DEFAULT_INTERVAL);
     }
 
     public HistQuotesRequest(String symbol, Interval interval) {
+
         this(symbol, DEFAULT_FROM, DEFAULT_TO, interval);
     }
 
     public HistQuotesRequest(String symbol, Calendar from, Calendar to) {
+
         this(symbol, from, to, DEFAULT_INTERVAL);
     }
 
     public HistQuotesRequest(String symbol, Calendar from, Calendar to, Interval interval) {
+
         this.symbol = symbol;
         this.from = this.cleanHistCalendar(from);
         this.to = this.cleanHistCalendar(to);
@@ -58,22 +62,26 @@ public class HistQuotesRequest {
     }
 
     public HistQuotesRequest(String symbol, Date from, Date to) {
+
         this(symbol, from, to, DEFAULT_INTERVAL);
     }
 
     public HistQuotesRequest(String symbol, Date from, Date to, Interval interval) {
+
         this(symbol, interval);
         this.from.setTime(from);
         this.to.setTime(to);
         this.cleanHistCalendar(this.from);
         this.cleanHistCalendar(this.to);
     }
-    
+
     /**
      * Put everything smaller than days at 0
+     *
      * @param cal calendar to be cleaned
      */
     private Calendar cleanHistCalendar(Calendar cal) {
+
         cal.set(Calendar.MILLISECOND, 0);
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MINUTE, 0);
@@ -83,15 +91,15 @@ public class HistQuotesRequest {
 
     public List<HistoricalQuote> getResult() throws IOException {
 
-        List<HistoricalQuote> result = new ArrayList<HistoricalQuote>();
-        
-        if(this.from.after(this.to)) {
+        List<HistoricalQuote> result = new ArrayList<>();
+
+        if (this.from.after(this.to)) {
             log.warn("Unable to retrieve historical quotes. "
-                    + "From-date should not be after to-date. From: "
-                    + this.from.getTime() + ", to: " + this.to.getTime());
+                     + "From-date should not be after to-date. From: "
+                     + this.from.getTime() + ", to: " + this.to.getTime());
             return result;
         }
-        
+
         Map<String, String> params = new LinkedHashMap<String, String>();
         params.put("s", this.symbol);
 
@@ -132,15 +140,16 @@ public class HistQuotesRequest {
     }
 
     private HistoricalQuote parseCSVLine(String line) {
+
         String[] data = line.split(YahooFinance.QUOTES_CSV_DELIMITER);
         return new HistoricalQuote(this.symbol,
-                Utils.parseHistDate(data[0]),
-                Utils.getBigDecimal(data[1]),
-                Utils.getBigDecimal(data[3]),
-                Utils.getBigDecimal(data[2]),
-                Utils.getBigDecimal(data[4]),
-                Utils.getBigDecimal(data[6]),
-                Utils.getLong(data[5])
+                                   Utils.parseHistDate(data[0]),
+                                   Utils.getBigDecimal(data[1]),
+                                   Utils.getBigDecimal(data[3]),
+                                   Utils.getBigDecimal(data[2]),
+                                   Utils.getBigDecimal(data[4]),
+                                   Utils.getBigDecimal(data[6]),
+                                   Utils.getLong(data[5])
         );
     }
 

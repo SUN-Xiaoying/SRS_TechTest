@@ -9,13 +9,14 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 
 public class FxQuoteRequestTest extends MockedServersTest {
 
     @Test
     public void fxQuoteTest() throws IOException {
+
         FxQuote gbpeur = YahooFinance.getFx(FxSymbols.GBPEUR);
         assertEquals(new BigDecimal("1.1806"), gbpeur.getPrice());
         assertEquals(FxSymbols.GBPEUR, gbpeur.getSymbol());
@@ -23,7 +24,7 @@ public class FxQuoteRequestTest extends MockedServersTest {
         FxQuote usdeur = YahooFinance.getFx(FxSymbols.USDEUR);
         assertEquals(new BigDecimal("0.8898"), usdeur.getPrice());
 
-        Map<String, FxQuote> fxQuotes = YahooFinance.getFx(new String[]{FxSymbols.EURUSD, FxSymbols.EURCHF});
+        Map<String, FxQuote> fxQuotes = YahooFinance.getFx(new String[]{ FxSymbols.EURUSD, FxSymbols.EURCHF });
         FxQuote eurusd = fxQuotes.get(FxSymbols.EURUSD);
         FxQuote eurchf = fxQuotes.get(FxSymbols.EURCHF);
         assertEquals(new BigDecimal("1.1235"), eurusd.getPrice());
@@ -34,6 +35,7 @@ public class FxQuoteRequestTest extends MockedServersTest {
 
     @Test
     public void fxFlowTest() throws IOException {
+
         int requestCount = MockedServersTest.quotesServer.getRequestCount();
         FxQuote gbpeur = YahooFinance.getFx(FxSymbols.GBPEUR);
         requestCount += 1;

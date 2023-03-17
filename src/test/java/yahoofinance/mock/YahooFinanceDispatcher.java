@@ -5,7 +5,6 @@ import com.google.common.io.Resources;
 import okhttp3.mockwebserver.Dispatcher;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.RecordedRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
@@ -23,13 +22,15 @@ public class YahooFinanceDispatcher extends Dispatcher {
     private final Map<String, ResponseResource> pathToResponseResource;
 
     public YahooFinanceDispatcher() {
+
         this.pathToResponseResource = new HashMap<String, ResponseResource>();
         this.loadRequests();
     }
 
     @Override
     public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
-        if(this.pathToResponseResource.containsKey(request.getPath())) {
+
+        if (this.pathToResponseResource.containsKey(request.getPath())) {
             return this.pathToResponseResource.get(request.getPath()).get();
         } else {
             log.warn("Requested path not configured. Cannot provide MockResponse for " + request.getPath());
@@ -38,6 +39,7 @@ public class YahooFinanceDispatcher extends Dispatcher {
     }
 
     private void loadRequests() {
+
         Yaml yaml = new Yaml();
         Map<String, List<Map<String, Object>>> requests;
         try {
@@ -47,16 +49,15 @@ public class YahooFinanceDispatcher extends Dispatcher {
             log.warn("Unable to process requests.yml. No requests mocked.", e);
             return;
         }
-        for(Map<String, Object> request : requests.get("requests")) {
+        for (Map<String, Object> request : requests.get("requests")) {
             this.pathToResponseResource.put(
                     (String) request.get("url"),
                     new ResponseResource(
                             (String) request.get("responseResource"),
                             (Integer) request.get("responseCode")
                     )
-            );
+                                           );
         }
     }
-
 
 }

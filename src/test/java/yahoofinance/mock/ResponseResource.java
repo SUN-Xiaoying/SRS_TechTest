@@ -3,12 +3,11 @@ package yahoofinance.mock;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import okhttp3.mockwebserver.MockResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 public class ResponseResource {
@@ -19,15 +18,18 @@ public class ResponseResource {
     private String resource;
 
     public ResponseResource(String resource) {
+
         this(resource, 200);
     }
 
     public ResponseResource(String resource, int responseCode) {
+
         this.resource = resource;
         this.responseCode = responseCode;
     }
 
     public MockResponse get() {
+
         URL url = Resources.getResource(this.resource);
         try {
             String response = Resources.toString(url, Charsets.UTF_8);

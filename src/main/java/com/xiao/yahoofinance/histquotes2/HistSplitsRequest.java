@@ -1,5 +1,7 @@
 package com.xiao.yahoofinance.histquotes2;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import yahoofinance.Utils;
 import yahoofinance.YahooFinance;
 import yahoofinance.util.RedirectableRequest;
@@ -10,13 +12,15 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
-import java.util.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
- *
  * @author Stijn Strickx (modified by Randle McMurphy)
  */
 public class HistSplitsRequest {
@@ -33,6 +37,7 @@ public class HistSplitsRequest {
     static {
         DEFAULT_FROM.add(Calendar.YEAR, -1);
     }
+
     public static final Calendar DEFAULT_TO = Calendar.getInstance();
 
     // Interval has no meaning here and is not used here
@@ -40,16 +45,19 @@ public class HistSplitsRequest {
     public static final QueryInterval DEFAULT_INTERVAL = QueryInterval.DAILY;
 
     public HistSplitsRequest(String symbol) {
+
         this(symbol, DEFAULT_FROM, DEFAULT_TO);
     }
 
     public HistSplitsRequest(String symbol, Calendar from, Calendar to) {
+
         this.symbol = symbol;
         this.from = this.cleanHistCalendar(from);
         this.to = this.cleanHistCalendar(to);
     }
 
     public HistSplitsRequest(String symbol, Date from, Date to) {
+
         this(symbol);
         this.from.setTime(from);
         this.to.setTime(to);
@@ -59,9 +67,11 @@ public class HistSplitsRequest {
 
     /**
      * Put everything smaller than days at 0
+     *
      * @param cal calendar to be cleaned
      */
     private Calendar cleanHistCalendar(Calendar cal) {
+
         cal.set(Calendar.MILLISECOND, 0);
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MINUTE, 0);
@@ -72,11 +82,11 @@ public class HistSplitsRequest {
     public List<HistoricalSplit> getResult() throws IOException {
 
         List<HistoricalSplit> result = new ArrayList<HistoricalSplit>();
-        
-        if(this.from.after(this.to)) {
+
+        if (this.from.after(this.to)) {
             log.warn("Unable to retrieve historical splits. "
-                    + "From-date should not be after to-date. From: "
-                    + this.from.getTime() + ", to: " + this.to.getTime());
+                     + "From-date should not be after to-date. From: "
+                     + this.from.getTime() + ", to: " + this.to.getTime());
             return result;
         }
 
@@ -87,13 +97,13 @@ public class HistSplitsRequest {
         // Interval has no meaning here and is not used here
         // But it's better to leave it because Yahoo's standard query URL still contains it
         params.put("interval", DEFAULT_INTERVAL.getTag());
-        
+
         // This will instruct Yahoo to return splits
         params.put("events", "split");
 
         params.put("crumb", CrumbManager.getCrumb());
 
-        String url = YahooFinance.HISTQUOTES2_BASE_URL + URLEncoder.encode(this.symbol , "UTF-8") + "?" + Utils.getURLParameters(params);
+        String url = YahooFinance.HISTQUOTES2_BASE_URL + URLEncoder.encode(this.symbol, "UTF-8") + "?" + Utils.getURLParameters(params);
 
         // Get CSV from Yahoo
         log.info("Sending request: " + url);
@@ -120,12 +130,13 @@ public class HistSplitsRequest {
     }
 
     private HistoricalSplit parseCSVLine(String line) {
+
         String[] data = line.split(YahooFinance.QUOTES_CSV_DELIMITER);
-    	String[] parts = data[1].split(":");
+        String[] parts = data[1].split(":");
         return new HistoricalSplit(this.symbol,
-                Utils.parseHistDate(data[0]),
-                Utils.getBigDecimal(parts[0]),
-                Utils.getBigDecimal(parts[1])
+                                   Utils.parseHistDate(data[0]),
+                                   Utils.getBigDecimal(parts[0]),
+                                   Utils.getBigDecimal(parts[1])
         );
     }
 
