@@ -24,9 +24,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author Stijn Strickx
- */
 public class HistQuotesQuery2V8Request {
 
     private static final Logger log = LoggerFactory.getLogger(HistQuotesQuery2V8Request.class);

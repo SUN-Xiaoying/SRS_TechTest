@@ -1,7 +1,6 @@
-package yahoofinance;
-
+import mock.MockedServersTest;
 import org.junit.jupiter.api.Test;
-import yahoofinance.mock.MockedServersTest;
+import yahoofinance.YahooFinance;
 import yahoofinance.quotes.fx.FxQuote;
 import yahoofinance.quotes.fx.FxSymbols;
 
@@ -12,10 +11,10 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 
 
-public class FxQuoteRequestTest extends MockedServersTest {
+class FxQuoteRequestTest extends MockedServersTest {
 
     @Test
-    public void fxQuoteTest() throws IOException {
+    void fxQuoteTest() throws IOException {
 
         FxQuote gbpeur = YahooFinance.getFx(FxSymbols.GBPEUR);
         assertEquals(new BigDecimal("1.1806"), gbpeur.getPrice());
@@ -34,7 +33,7 @@ public class FxQuoteRequestTest extends MockedServersTest {
     }
 
     @Test
-    public void fxFlowTest() throws IOException {
+    void fxFlowTest() throws IOException {
 
         int requestCount = MockedServersTest.quotesServer.getRequestCount();
         FxQuote gbpeur = YahooFinance.getFx(FxSymbols.GBPEUR);

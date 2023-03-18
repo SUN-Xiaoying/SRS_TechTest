@@ -1,12 +1,11 @@
 plugins {
-    id 'java'
-    id 'org.springframework.boot' version '3.0.4'
-    id 'io.spring.dependency-management' version '1.1.0'
+    id "java"
+    id "org.springframework.boot" version "${springBootVersion}"
+    id "io.spring.dependency-management" version "1.1.0"
 }
 
-group = 'com.xiao'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+group = "com.xiao"
+version = "0.0.1-SNAPSHOT"
 
 configurations {
     compileOnly {
@@ -19,24 +18,28 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'com.yahoofinance-api:YahooFinanceAPI:3.17.0'
-    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.springframework.boot:spring-boot-starter-thymeleaf"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "com.yahoofinance-api:YahooFinanceAPI:${yahooFinanceApiVersion}"
+    implementation "com.squareup.okhttp3:okhttp:${okHttp3Version}"
+    implementation "com.squareup.okhttp3:mockwebserver:${okHttp3Version}"
 
-    compileOnly 'org.projectlombok:lombok'
-    testImplementation 'com.google.guava:guava:16+'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'mysql:mysql-connector-java:8.0.32'
+    compileOnly "org.projectlombok:lombok"
+    developmentOnly "org.springframework.boot:spring-boot-devtools"
 
-    annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor "org.projectlombok:lombok"
 
-    testImplementation 'com.squareup.okhttp3:mockwebserver:4.10.0'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.6.2'
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.6.2'
+    testImplementation "org.projectlombok:lombok:${lombokVersion}"
+    testImplementation "com.squareup.okhttp3:mockwebserver:${okHttp3Version}"
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude group: 'junit', module: 'junit'
+    }
+    testImplementation "org.junit.jupiter:junit-jupiter-params:${junitJupiterVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter:${junitJupiterVersion}"
+    testImplementation "com.google.guava:guava:31.1-jre"
+    testImplementation "org.yaml:snakeyaml:1.26"
 }
 
 java {
@@ -44,6 +47,6 @@ java {
     targetCompatibility = 17
 }
 
-tasks.named('test') {
+tasks.named("test") {
     useJUnitPlatform()
 }

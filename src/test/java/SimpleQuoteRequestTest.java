@@ -1,7 +1,7 @@
 package yahoofinance;
 
+import mock.MockedServersTest;
 import org.junit.jupiter.api.Test;
-import yahoofinance.mock.MockedServersTest;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -13,10 +13,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 
-public class SimpleQuoteRequestTest extends MockedServersTest {
+class SimpleQuoteRequestTest extends MockedServersTest {
 
     @Test
-    public void europeStockQuoteTest() throws IOException {
+    void europeStockQuoteTest() throws IOException {
 
         Stock stock = YahooFinance.get("AIR.PA");
 
@@ -87,7 +87,7 @@ public class SimpleQuoteRequestTest extends MockedServersTest {
     }
 
     @Test
-    public void usStockQuoteTest() throws IOException {
+    void usStockQuoteTest() throws IOException {
 
         Stock stock = YahooFinance.get("INTC");
 
@@ -122,7 +122,7 @@ public class SimpleQuoteRequestTest extends MockedServersTest {
     }
 
     @Test
-    public void singaporeStockQuoteTest() throws IOException {
+    void singaporeStockQuoteTest() throws IOException {
 
         Stock stock = YahooFinance.get("C6L.SI");
 

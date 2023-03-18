@@ -1,10 +1,10 @@
 package com.xiao.yahoofinance;
 
-import yahoofinance.query2v8.HistQuotesQuery2V8Request;
-import yahoofinance.histquotes.HistoricalQuote;
 import yahoofinance.Stock;
 import yahoofinance.histquotes.HistQuotesRequest;
+import yahoofinance.histquotes.HistoricalQuote;
 import yahoofinance.histquotes.Interval;
+import yahoofinance.query2v8.HistQuotesQuery2V8Request;
 import yahoofinance.quotes.csv.FxQuotesRequest;
 import yahoofinance.quotes.csv.StockQuotesData;
 import yahoofinance.quotes.csv.StockQuotesRequest;
@@ -438,6 +438,7 @@ public class YahooFinance {
     }
 
     public static List<HistoricalQuote> getDailyHistoricalQuotes(String symbol) throws IOException {
+
         HistQuotesQuery2V8Request request = new HistQuotesQuery2V8Request(symbol);
 
         return request.getResult();

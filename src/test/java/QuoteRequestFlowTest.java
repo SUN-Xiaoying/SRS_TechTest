@@ -1,7 +1,7 @@
-package yahoofinance;
-
+import mock.MockedServersTest;
 import org.junit.jupiter.api.Test;
-import yahoofinance.mock.MockedServersTest;
+import yahoofinance.Stock;
+import yahoofinance.YahooFinance;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -12,10 +12,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 
-public class QuoteRequestFlowTest extends MockedServersTest {
+class QuoteRequestFlowTest extends MockedServersTest {
 
     @Test
-    public void quoteRefreshTest() throws IOException {
+    void quoteRefreshTest() throws IOException {
 
         Stock stock = YahooFinance.get("TSLA");
 
@@ -31,7 +31,7 @@ public class QuoteRequestFlowTest extends MockedServersTest {
     }
 
     @Test
-    public void statsRefreshTest() throws IOException {
+    void statsRefreshTest() throws IOException {
 
         Stock stock = YahooFinance.get("AIR.PA");
 
@@ -47,7 +47,7 @@ public class QuoteRequestFlowTest extends MockedServersTest {
     }
 
     @Test
-    public void dividendRefreshTest() throws IOException {
+    void dividendRefreshTest() throws IOException {
 
         Stock stock = YahooFinance.get("INTC");
 
@@ -63,7 +63,7 @@ public class QuoteRequestFlowTest extends MockedServersTest {
     }
 
     @Test
-    public void multipleQuoteRequestTest() throws IOException {
+    void multipleQuoteRequestTest() throws IOException {
 
         Map<String, Stock> stocks = YahooFinance.get(new String[]{ "AIR.PA", "INTC", "C6L.SI" });
         assertTrue(stocks.containsKey("AIR.PA"));

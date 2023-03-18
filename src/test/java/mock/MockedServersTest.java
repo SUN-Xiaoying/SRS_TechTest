@@ -1,4 +1,4 @@
-package yahoofinance.mock;
+package mock;
 
 import okhttp3.mockwebserver.Dispatcher;
 import okhttp3.mockwebserver.MockWebServer;

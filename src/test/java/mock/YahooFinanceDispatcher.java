@@ -1,4 +1,4 @@
-package yahoofinance.mock;
+package mock;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;

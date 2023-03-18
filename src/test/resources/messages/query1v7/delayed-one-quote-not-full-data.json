@@ -1,0 +1,38 @@
+{
+  "quoteResponse": {
+    "result": [
+      {
+        "language": "en-US",
+        "region": "US",
+        "quoteType": "ECNQUOTE",
+        "typeDisp": "ECNQUOTE",
+        "quoteSourceName": "Delayed Quote",
+        "triggerable": true,
+        "customPriceAlertConfidence": "HIGH",
+        "exchangeTimezoneName": "America/New_York",
+        "exchangeTimezoneShortName": "EDT",
+        "gmtOffSetMilliseconds": -14400000,
+        "market": "us_market",
+        "esgPopulated": false,
+        "exchange": "NMS",
+        "marketState": "REGULAR",
+        "fullExchangeName": "NasdaqGS",
+        "averageDailyVolume3Month": 0,
+        "averageDailyVolume10Day": 0,
+        "fiftyTwoWeekRange": "0.055 - 0.055",
+        "fiftyTwoWeekLow": 0.055,
+        "fiftyTwoWeekHigh": 0.055,
+        "firstTradeDateMilliseconds": 896880600000,
+        "priceHint": 2,
+        "fiftyDayAverage": 0.055,
+        "twoHundredDayAverage": 0.055,
+        "sourceInterval": 15,
+        "exchangeDataDelayedBy": 0,
+        "tradeable": false,
+        "cryptoTradeable": false,
+        "symbol": "AWS"
+      }
+    ],
+    "error": null
+  }
+}

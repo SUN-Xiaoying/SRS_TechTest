@@ -9,13 +9,6 @@ public class YahooApplication {
 
     public static void main(String[] args) {
 
-
-        //		BigDecimal price = stock.getQuote().getPrice();
-        //		BigDecimal change = stock.getQuote().getChangeInPercent();
-        //		BigDecimal peg = stock.getStats().getPeg();
-        //		BigDecimal dividend = stock.getDividend().getAnnualYieldPercent();
-        //
-        //		stock.print();
         SpringApplication.run(YahooApplication.class, args);
     }
 
