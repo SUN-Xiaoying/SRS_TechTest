@@ -45,6 +45,7 @@ coverage/
 /src/main/resources/dev/
 /src/main/resources/rebel.xml
 .envrc
+lib
 
 ### NetBeans IDE:
 /.nb-gradle/
