@@ -1,33 +1,57 @@
-package yahoofinance.quotes.query1v7;
-
 import com.fasterxml.jackson.databind.JsonNode;
+import com.xiao.yahoofinance.YahooFinance;
+import jsonserver.JsonServersTest;
+import lombok.SneakyThrows;
+import lombok.experimental.FieldDefaults;
+import lombok.val;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import yahoofinance.MessageUtils;
+import yahoofinance.Stock;
 import yahoofinance.Utils;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Map;
 import java.util.TimeZone;
 
+import static lombok.AccessLevel.PRIVATE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-class StockQuoteQuery1V7RequestTest {
+@FieldDefaults(level = PRIVATE)
+class QuotesQuery1v7Test extends JsonServersTest {
 
-    @Mock
-    StockQuotesQuery1V7Request request = new StockQuotesQuery1V7Request("test");
+    Calendar today;
+    Calendar from;
+    final String SHEL_SYMBOL = "SHEL";
+    final String GOOG_SYMBOL = "GOOG";
+    final String AMZN_SYMBOL = "AMZN";
+    final String WRONG_SYMBOL = "SHELL";
 
+    @BeforeEach
+    void setup() {
+
+        today = Calendar.getInstance();
+        today.set(Calendar.YEAR, 2023);
+        today.set(Calendar.MONTH, 3);
+        today.set(Calendar.DATE, 19);
+
+        from = (Calendar) today.clone();
+        from.add(Calendar.YEAR, -1);
+    }
+
+    @SneakyThrows
     @Test
-    void testParseJson() throws IOException {
+    void testOneSymbol() {
 
-        // given
-        var message = MessageUtils.loadMessage("/messages/query1v7/one-quote-ok.json");
-        var result = message.get("quoteResponse").get("result").get(0);
+        // given:
+        val message = MessageUtils.loadMessage("/responses/query1v7/one-quote-ok.json");
+        val result = message.get("quoteResponse").get("result").get(0);
 
-        // when
-        var stock = request.parseJson(result);
+        // when:
+        Stock stock = YahooFinance.get(SHEL_SYMBOL, from, today);
 
-        // then
         assertNotNull(stock);
         assertEquals(result.get("symbol").asText(), stock.getSymbol());
         assertEquals(result.get("longName").asText(), stock.getName());
@@ -65,40 +89,45 @@ class StockQuoteQuery1V7RequestTest {
         assertEquals(Utils.getBigDecimal(getStringValue(result, "epsForward")), status.getEpsEstimateCurrentYear());
         assertEquals(Utils.getBigDecimal(getStringValue(result, "priceToBook")), status.getPriceBook());
         assertEquals(Utils.getBigDecimal(getStringValue(result, "bookValue")), status.getBookValuePerShare());
-
     }
 
     @Test
     void testMultipleSymbolsRequest() throws IOException {
 
         // given
-        String symbols = "TSLA,AMZN,SHEL";
-
-        StockQuotesQuery1V7Request request = new StockQuotesQuery1V7Request(symbols);
+        var message = MessageUtils.loadMessage("/responses/query1v7/multi-quotes-all-ok.json");
+        var results = message.get("quoteResponse").get("result");
 
         // when
-        var results = request.getResult();
+        Map<String, Stock> stocks = YahooFinance.get(new String[]{ GOOG_SYMBOL, AMZN_SYMBOL, SHEL_SYMBOL }, from, today);
 
         // then
-        assertEquals(3, results.size());
-        assertEquals("TSLA", results.get(0).getSymbol());
-        assertEquals("AMZN", results.get(1).getSymbol());
-        assertEquals("SHEL", results.get(2).getSymbol());
+        assertEquals(3, stocks.size());
+        val google = stocks.get(GOOG_SYMBOL);
+        assertEquals(results.get(0).get("symbol").asText(), google.getSymbol());
+        assertEquals(results.get(0).get("longName").asText(), google.getName());
+        assertEquals(results.get(0).get("fullExchangeName").asText(), google.getStockExchange());
+        assertEquals(results.get(0).get("currency").asText(), google.getCurrency());
+
+        val amazon = stocks.get(AMZN_SYMBOL);
+        assertEquals(results.get(1).get("symbol").asText(), amazon.getSymbol());
+        assertEquals(results.get(1).get("longName").asText(), amazon.getName());
+        assertEquals(results.get(1).get("fullExchangeName").asText(), amazon.getStockExchange());
+        assertEquals(results.get(1).get("currency").asText(), amazon.getCurrency());
+
+        val shell = stocks.get(SHEL_SYMBOL);
+        assertEquals(results.get(2).get("symbol").asText(), shell.getSymbol());
+        assertEquals(results.get(2).get("longName").asText(), shell.getName());
+        assertEquals(results.get(2).get("fullExchangeName").asText(), shell.getStockExchange());
+        assertEquals(results.get(2).get("currency").asText(), shell.getCurrency());
     }
 
     @Test
     void testWrongSymbolRequest() throws IOException {
 
-        // given
-        String symbols = "SHELL";
+        Stock stock = YahooFinance.get(WRONG_SYMBOL, from, today);
 
-        StockQuotesQuery1V7Request request = new StockQuotesQuery1V7Request(symbols);
-
-        // when
-        var result = request.getResult();
-
-        // then
-        assertEquals(0, result.size());
+        assertNull(stock);
     }
 
     private String getStringValue(JsonNode node, String field) {
@@ -108,4 +137,5 @@ class StockQuoteQuery1V7RequestTest {
         }
         return null;
     }
+
 }

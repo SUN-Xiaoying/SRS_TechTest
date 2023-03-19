@@ -16,20 +16,20 @@
           "currentTradingPeriod": {
             "pre": {
               "timezone": "EDT",
-              "start": 1679040000,
               "end": 1679059800,
+              "start": 1679040000,
               "gmtoffset": -14400
             },
             "regular": {
               "timezone": "EDT",
-              "start": 1679059800,
               "end": 1679083200,
+              "start": 1679059800,
               "gmtoffset": -14400
             },
             "post": {
               "timezone": "EDT",
-              "start": 1679083200,
               "end": 1679097600,
+              "start": 1679083200,
               "gmtoffset": -14400
             }
           },

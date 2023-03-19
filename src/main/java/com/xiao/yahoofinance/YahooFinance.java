@@ -340,6 +340,17 @@ public class YahooFinance {
         return YahooFinance.getQuotes(Utils.join(symbols, ","), from, to, interval);
     }
 
+    public static List<HistoricalQuote> getHistQuotes(String symbol, Calendar from, Calendar to) throws IOException {
+
+        if (YahooFinance.HISTQUOTES2_ENABLED.equalsIgnoreCase("true")) {
+            HistQuotesQuery2V8Request request = new HistQuotesQuery2V8Request(symbol, from, to);
+            return request.getResult();
+        } else {
+            HistQuotesRequest request = new HistQuotesRequest(symbol, from, to);
+            return request.getResult();
+        }
+    }
+
     /**
      * Sends a request for a single FX rate.
      * Some common symbols can easily be found in the ENUM {@link yahoofinance.quotes.fx.FxSymbols}
@@ -435,12 +446,5 @@ public class YahooFinance {
             s.getHistory(from, to, interval);
         }
         return stocks;
-    }
-
-    public static List<HistoricalQuote> getDailyHistoricalQuotes(String symbol) throws IOException {
-
-        HistQuotesQuery2V8Request request = new HistQuotesQuery2V8Request(symbol);
-
-        return request.getResult();
     }
 }
