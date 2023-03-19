@@ -1,31 +1,31 @@
 requests:
+  - url: /d/quotes.csv?s=GOOG&f=nsc4xab2sa5sbb3sb6sl1sk3sd1t1opghva2kjm3m4sj2sss1sj1sf6sr1qdyee7e9e8rr5p6p5b4s6j4t8s7&e=.csv
+    responseCode: 200
+    responseResource: singleQuoteRequest/GOOG.csv
+
+  - url: /d/quotes.csv?s=SCTY&f=nsc4xab2sa5sbb3sb6sl1sk3sd1t1opghva2kjm3m4sj2sss1sj1sf6sr1qdyee7e9e8rr5p6p5b4s6j4t8s7&e=.csv
+    responseCode: 200
+    responseResource: singleQuoteRequest/SCTY.csv
+
   - url: /d/quotes.csv?s=AIR.PA&f=nsc4xab2sa5sbb3sb6sl1sk3sd1t1opghva2kjm3m4sj2sss1sj1sf6sr1qdyee7e9e8rr5p6p5b4s6j4t8s7&e=.csv
     responseCode: 200
-    responseResource: simpleQuoteRequest/AIR.PA.csv
+    responseResource: singleQuoteRequest/AIR.PA.csv
 
   - url: /d/quotes.csv?s=TSLA&f=nsc4xab2sa5sbb3sb6sl1sk3sd1t1opghva2kjm3m4sj2sss1sj1sf6sr1qdyee7e9e8rr5p6p5b4s6j4t8s7&e=.csv
     responseCode: 200
-    responseResource: simpleQuoteRequest/TSLA.csv
+    responseResource: singleQuoteRequest/TSLA.csv
 
   - url: /d/quotes.csv?s=INTC&f=nsc4xab2sa5sbb3sb6sl1sk3sd1t1opghva2kjm3m4sj2sss1sj1sf6sr1qdyee7e9e8rr5p6p5b4s6j4t8s7&e=.csv
     responseCode: 200
-    responseResource: simpleQuoteRequest/INTC.csv
+    responseResource: singleQuoteRequest/INTC.csv
 
   - url: /d/quotes.csv?s=C6L.SI&f=nsc4xab2sa5sbb3sb6sl1sk3sd1t1opghva2kjm3m4sj2sss1sj1sf6sr1qdyee7e9e8rr5p6p5b4s6j4t8s7&e=.csv
     responseCode: 200
-    responseResource: simpleQuoteRequest/C6L.SI.csv
+    responseResource: singleQuoteRequest/C6L.SI.csv
 
   - url: /d/quotes.csv?s=AIR.PA%2CINTC%2CC6L.SI&f=nsc4xab2sa5sbb3sb6sl1sk3sd1t1opghva2kjm3m4sj2sss1sj1sf6sr1qdyee7e9e8rr5p6p5b4s6j4t8s7&e=.csv
     responseCode: 200
     responseResource: multiQuoteRequest/AIR.PA_INTC_C6L.SI.csv
-
-  - url: /d/quotes.csv?s=GOOG&f=nsc4xab2sa5sbb3sb6sl1sk3sd1t1opghva2kjm3m4sj2sss1sj1sf6sr1qdyee7e9e8rr5p6p5b4s6j4t8s7&e=.csv
-    responseCode: 200
-    responseResource: simpleQuoteRequest/GOOG.csv
-
-  - url: /d/quotes.csv?s=SCTY&f=nsc4xab2sa5sbb3sb6sl1sk3sd1t1opghva2kjm3m4sj2sss1sj1sf6sr1qdyee7e9e8rr5p6p5b4s6j4t8s7&e=.csv
-    responseCode: 200
-    responseResource: simpleQuoteRequest/SCTY.csv
 
   - url: /d/quotes.csv?s=INTC%2CAIR.PA&f=nsc4xab2sa5sbb3sb6sl1sk3sd1t1opghva2kjm3m4sj2sss1sj1sf6sr1qdyee7e9e8rr5p6p5b4s6j4t8s7&e=.csv
     responseCode: 200

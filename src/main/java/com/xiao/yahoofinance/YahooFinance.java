@@ -55,6 +55,7 @@ public class YahooFinance {
     public static final String HISTQUOTES_BASE_URL = System.getProperty("yahoofinance.baseurl.histquotes", "https://ichart.yahoo.com/table.csv");
     public static final String HISTQUOTES2_ENABLED = System.getProperty("yahoofinance.histquotes2.enabled", "true");
     public static final String HISTQUOTES2_BASE_URL = System.getProperty("yahoofinance.baseurl.histquotes2", "https://query1.finance.yahoo.com/v7/finance/download/");
+    public static final String HISTQUOTES_QUERY2V8_ENABLED = System.getProperty("yahoofinance.histquotesquery2v8.enabled", "true");
     public static final String HISTQUOTES_QUERY2V8_BASE_URL = System.getProperty("yahoofinance.baseurl.histquotesquery2v8", "https://query2.finance.yahoo.com/v8/finance/chart/");
     public static final String HISTQUOTES2_SCRAPE_URL = System.getProperty("yahoofinance.scrapeurl.histquotes2", "https://finance.yahoo.com/quote/%5EGSPC/options");
     public static final String HISTQUOTES2_CRUMB_URL = System.getProperty("yahoofinance.crumburl.histquotes2", "https://query1.finance.yahoo.com/v1/test/getcrumb");
@@ -342,7 +343,7 @@ public class YahooFinance {
 
     public static List<HistoricalQuote> getHistQuotes(String symbol, Calendar from, Calendar to) throws IOException {
 
-        if (YahooFinance.HISTQUOTES2_ENABLED.equalsIgnoreCase("true")) {
+        if (YahooFinance.HISTQUOTES_QUERY2V8_ENABLED.equalsIgnoreCase("true")) {
             HistQuotesQuery2V8Request request = new HistQuotesQuery2V8Request(symbol, from, to);
             return request.getResult();
         } else {

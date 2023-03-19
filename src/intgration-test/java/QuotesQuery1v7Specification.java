@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 @FieldDefaults(level = PRIVATE)
-class QuotesQuery1v7Test extends JsonServersTest {
+class QuotesQuery1v7Specification extends JsonServersTest {
 
     Calendar today;
     Calendar from;
@@ -33,9 +33,7 @@ class QuotesQuery1v7Test extends JsonServersTest {
     void setup() {
 
         today = Calendar.getInstance();
-        today.set(Calendar.YEAR, 2023);
-        today.set(Calendar.MONTH, 3);
-        today.set(Calendar.DATE, 19);
+        today.setTimeInMillis(1650362400L * 1000);
 
         from = (Calendar) today.clone();
         from.add(Calendar.YEAR, -1);

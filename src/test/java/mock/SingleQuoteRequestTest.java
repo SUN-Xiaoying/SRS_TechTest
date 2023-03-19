@@ -1,25 +1,27 @@
-package yahoofinance;
+package mock;
 
-import mock.MockedServersTest;
 import org.junit.jupiter.api.Test;
+import yahoofinance.Stock;
+import yahoofinance.YahooFinance;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-
-class SimpleQuoteRequestTest extends MockedServersTest {
+class SingleQuoteRequestTest extends MockedServersTest {
 
     @Test
     void europeStockQuoteTest() throws IOException {
 
+        // given:
         Stock stock = YahooFinance.get("AIR.PA");
 
+        // then:
         assertEquals("AIR.PA", stock.getSymbol());
         assertEquals("AIRBUS GROUP", stock.getName());
         assertEquals("EUR", stock.getCurrency());

@@ -36,7 +36,7 @@ public class JsonServersTest {
 
         System.setProperty("yahoofinance.baseurl.quotes", quotesBaseUrl);
         System.setProperty("yahoofinance.baseurl.histquotesquery2v8", histQuotesBaseUrl);
-        System.setProperty("yahoofinance.histquotes2.enabled", "true");
+        System.setProperty("yahoofinance.histquotesquery2v8.enabled", "true");
         System.setProperty("yahoofinance.quotesquery1v7.enabled", "true");
     }
 }

@@ -1,4 +1,5 @@
-import mock.MockedServersTest;
+package mock;
+
 import org.junit.jupiter.api.Test;
 import yahoofinance.YahooFinance;
 import yahoofinance.quotes.fx.FxQuote;
@@ -8,8 +9,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FxQuoteRequestTest extends MockedServersTest {
 

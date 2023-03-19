@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @FieldDefaults(level = PRIVATE)
-class HistQuotesQuery2v8Test {
+class HistQuotesQuery2v8Specification {
 
     Calendar today;
     Calendar from;

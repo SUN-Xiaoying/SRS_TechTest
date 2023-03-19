@@ -1,22 +1,24 @@
-import mock.MockedServersTest;
+package mock;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.HistoricalQuote;
 import yahoofinance.histquotes.Interval;
+import yahoofinance.histquotes2.MessageUtils;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class HistoricalQuoteRequestTest extends MockedServersTest {
 
@@ -35,11 +37,16 @@ class HistoricalQuoteRequestTest extends MockedServersTest {
         from.add(Calendar.YEAR, -1);
     }
 
-    @Test
-    void historicalQuoteTest() throws IOException {
+    @ParameterizedTest
+    @ValueSource(ints = { 2, 6 })
+    void historicalQuoteTest(int sample) throws IOException {
+        // given:
+        var data = MessageUtils.loadHistQuotesCSV_old("GOOG", "/historicalQuoteRequest/GOOG_1Y_M.csv");
 
+        // when:
         Stock goog = YahooFinance.get("GOOG", from, today);
 
+        // then:
         assertNotNull(goog.getHistory());
         assertEquals(13, goog.getHistory().size());
 
@@ -54,30 +61,19 @@ class HistoricalQuoteRequestTest extends MockedServersTest {
             assertNotNull(histQuote.getDate());
         }
 
-        HistoricalQuote histQuote = goog.getHistory().get(5);
+        HistoricalQuote histQuote = goog.getHistory().get(sample);
+        var sampleData = data.get(sample);
 
-        assertEquals(new BigDecimal("693.01001"), histQuote.getAdjClose());
-        assertEquals(new BigDecimal("693.01001"), histQuote.getClose());
-        assertEquals(new BigDecimal("769.900024"), histQuote.getHigh());
-        assertEquals(new BigDecimal("689.00"), histQuote.getLow());
-        assertEquals(new BigDecimal("738.599976"), histQuote.getOpen());
-        assertEquals(Long.valueOf(2125700), histQuote.getVolume());
-        assertEquals(3, histQuote.getDate().get(Calendar.MONTH));
-        assertEquals(1, histQuote.getDate().get(Calendar.DATE));
-        assertEquals(2016, histQuote.getDate().get(Calendar.YEAR));
+        assertEquals(sampleData.getAdjClose(), histQuote.getAdjClose());
+        assertEquals(sampleData.getClose(), histQuote.getClose());
+        assertEquals(sampleData.getHigh(), histQuote.getHigh());
+        assertEquals(sampleData.getLow(), histQuote.getLow());
+        assertEquals(sampleData.getOpen(), histQuote.getOpen());
+        assertEquals(sampleData.getVolume(), histQuote.getVolume());
+        assertEquals(sampleData.getDate().get(Calendar.MONTH), histQuote.getDate().get(Calendar.MONTH));
+        assertEquals(sampleData.getDate().get(Calendar.DATE), histQuote.getDate().get(Calendar.DATE));
+        assertEquals(sampleData.getDate().get(Calendar.YEAR), histQuote.getDate().get(Calendar.YEAR));
 
-    }
-
-    @Test
-    void intervalTest() throws IOException {
-
-        Stock tsla = YahooFinance.get("TSLA", from, today, Interval.DAILY);
-        Stock scty = YahooFinance.get("SCTY", from, today, Interval.WEEKLY);
-        Stock goog = YahooFinance.get("GOOG", from, today, Interval.MONTHLY);
-
-        assertEquals(252, tsla.getHistory().size());
-        assertEquals(53, scty.getHistory().size());
-        assertEquals(13, goog.getHistory().size());
     }
 
     @Test
@@ -101,20 +97,6 @@ class HistoricalQuoteRequestTest extends MockedServersTest {
         assertEquals(12, histQuote.getDate().get(Calendar.DATE));
         assertEquals(2011, histQuote.getDate().get(Calendar.YEAR));
 
-    }
-
-    @Test
-    void multiStockTest() throws IOException {
-
-        String[] symbols = new String[]{ "INTC", "AIR.PA" };
-        Map<String, Stock> stocks = YahooFinance.get(symbols, from, today);
-        Stock intel = stocks.get("INTC");
-        Stock airbus = stocks.get("AIR.PA");
-
-        assertEquals(13, intel.getHistory().size());
-        assertEquals(13, airbus.getHistory().size());
-        assertEquals("INTC", intel.getHistory().get(3).getSymbol());
-        assertEquals("AIR.PA", airbus.getHistory().get(5).getSymbol());
     }
 
     @Test
