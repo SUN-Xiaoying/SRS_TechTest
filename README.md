@@ -29,7 +29,7 @@ Test sets are composed of 2 parts.
 
 ### test
 
-The **test** has two parts, `mock` and `yahoofinance`.
+The **test** has two parts, `mock` and `yahoofinance`, which **must be implemented separately**
 
 `yahoofinance` contains unit tests, that will access the server directly and verify the data that will not change in
 general (stock name,

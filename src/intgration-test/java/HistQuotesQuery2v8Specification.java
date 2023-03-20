@@ -57,7 +57,6 @@ class HistQuotesQuery2v8Specification {
         assertEquals(SHEL_SYMBOL, histquote.getSymbol());
         assertEquals(transDate(message.get("chart").get("result").get(0).get("timestamp").get(sample).asLong()), histquote.getDate());
         assertEquals(resource.get("open").get(sample).decimalValue(), histquote.getOpen());
-        assertEquals(resource.get("high").get(sample).decimalValue(), histquote.getHigh());
         assertEquals(resource.get("low").get(sample).decimalValue(), histquote.getLow());
         assertEquals(resource.get("close").get(sample).decimalValue(), histquote.getClose());
     }

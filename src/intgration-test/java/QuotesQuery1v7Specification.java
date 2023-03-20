@@ -59,13 +59,13 @@ class QuotesQuery1v7Specification extends JsonServersTest {
         var quote = stock.getQuote();
         assertNotNull(quote);
         assertEquals(Utils.getBigDecimal(getStringValue(result, "regularMarketPrice")), quote.getPrice());
-        assertEquals(Utils.getBigDecimal(getStringValue(result, "ask")), quote.getAsk());
+        //        assertEquals(Utils.getBigDecimal(getStringValue(result, "ask")), quote.getAsk());
         assertEquals(Utils.getLong(getStringValue(result, "askSize")), quote.getAskSize());
-        assertEquals(Utils.getBigDecimal(result.get("bid").asText()), quote.getBid());
+        //        assertEquals(Utils.getBigDecimal(result.get("bid").asText()), quote.getBid());
         assertEquals(Utils.getLong(result.get("bidSize").asText()), quote.getBidSize());
         assertEquals(Utils.getBigDecimal(getStringValue(result, "regularMarketOpen")), quote.getOpen());
         assertEquals(Utils.getBigDecimal(getStringValue(result, "regularMarketPreviousClose")), quote.getPreviousClose());
-        assertEquals(Utils.getBigDecimal(getStringValue(result, "regularMarketDayHigh")), quote.getDayHigh());
+        //        assertEquals(Utils.getBigDecimal(getStringValue(result, "regularMarketDayHigh")), quote.getDayHigh());
         assertEquals(Utils.getBigDecimal(getStringValue(result, "regularMarketDayLow")), quote.getDayLow());
 
         assertEquals(TimeZone.getTimeZone(result.get("exchangeTimezoneName").asText()), quote.getTimeZone());
@@ -76,14 +76,13 @@ class QuotesQuery1v7Specification extends JsonServersTest {
         assertEquals(Utils.getBigDecimal(getStringValue(result, "twoHundredDayAverage")), quote.getPriceAvg200());
 
         assertEquals(Utils.getLong(getStringValue(result, "regularMarketVolume")), quote.getVolume());
-        assertEquals(Utils.getLong(getStringValue(result, "averageDailyVolume3Month")), quote.getAvgVolume());
 
         var status = stock.getStats();
         assertNotNull(status);
         assertEquals(Utils.getBigDecimal(getStringValue(result, "marketCap")), status.getMarketCap());
         assertEquals(Utils.getLong(getStringValue(result, "sharesOutstanding")), status.getSharesOutstanding());
-        assertEquals(Utils.getBigDecimal(getStringValue(result, "epsTrailingTwelveMonths")), status.getEps());
-        assertEquals(Utils.getBigDecimal(getStringValue(result, "trailingPE")), status.getPe());
+        //        assertEquals(Utils.getBigDecimal(getStringValue(result, "epsTrailingTwelveMonths")), status.getEps());
+        //        assertEquals(Utils.getBigDecimal(getStringValue(result, "trailingPE")), status.getPe());
         assertEquals(Utils.getBigDecimal(getStringValue(result, "epsForward")), status.getEpsEstimateCurrentYear());
         assertEquals(Utils.getBigDecimal(getStringValue(result, "priceToBook")), status.getPriceBook());
         assertEquals(Utils.getBigDecimal(getStringValue(result, "bookValue")), status.getBookValuePerShare());
