@@ -1,10 +1,10 @@
-package yahoofinance.exchange;
+package com.xiao.yahoofinance.exchange;
 
 
 import lombok.experimental.FieldDefaults;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import yahoofinance.exchanges.ExchangeTimeZone;
+import com.xiao.yahoofinance.exchanges.ExchangeTimeZone;
 
 import java.util.TimeZone;
 

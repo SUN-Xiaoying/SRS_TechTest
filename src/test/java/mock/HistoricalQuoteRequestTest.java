@@ -4,11 +4,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import yahoofinance.Stock;
-import yahoofinance.YahooFinance;
-import yahoofinance.histquotes.HistoricalQuote;
-import yahoofinance.histquotes.Interval;
-import yahoofinance.histquotes2.MessageUtils;
+import com.xiao.yahoofinance.Stock;
+import com.xiao.yahoofinance.YahooFinance;
+import com.xiao.yahoofinance.histquotes.HistoricalQuote;
+import com.xiao.yahoofinance.histquotes.Interval;
+import com.xiao.yahoofinance.histquotes2.MessageUtils;
 
 import java.io.IOException;
 import java.math.BigDecimal;

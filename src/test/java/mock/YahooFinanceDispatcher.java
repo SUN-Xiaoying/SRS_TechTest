@@ -35,7 +35,7 @@ public class YahooFinanceDispatcher extends Dispatcher {
         } else {
             log.warn("Requested path not configured. Cannot provide MockResponse for " + request.getPath());
         }
-        return null;
+        return new MockResponse().setResponseCode(404).setBody("No fixture for " + request.getPath());
     }
 
     private void loadRequests() {

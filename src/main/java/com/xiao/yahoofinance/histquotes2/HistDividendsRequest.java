@@ -2,9 +2,9 @@ package com.xiao.yahoofinance.histquotes2;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import yahoofinance.Utils;
-import yahoofinance.YahooFinance;
-import yahoofinance.util.RedirectableRequest;
+import com.xiao.yahoofinance.Utils;
+import com.xiao.yahoofinance.YahooFinance;
+import com.xiao.yahoofinance.util.RedirectableRequest;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -61,8 +61,8 @@ public class HistDividendsRequest {
         this(symbol);
         this.from.setTime(from);
         this.to.setTime(to);
-        this.cleanHistCalendar(this.from);
-        this.cleanHistCalendar(this.to);
+        this.from.setTimeInMillis(this.cleanHistCalendar(this.from).getTimeInMillis());
+        this.to.setTimeInMillis(this.cleanHistCalendar(this.to).getTimeInMillis());
     }
 
     /**
@@ -72,10 +72,12 @@ public class HistDividendsRequest {
      */
     private Calendar cleanHistCalendar(Calendar cal) {
 
+        cal = (Calendar) cal.clone();
+
         cal.set(Calendar.MILLISECOND, 0);
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.HOUR, 0);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
         return cal;
     }
 

@@ -13,7 +13,7 @@ public class MessageUtils {
     public static JsonNode loadMessage(String filepath) throws IOException {
 
         var mapper = new ObjectMapper();
-        InputStream message = yahoofinance.histquotes2.MessageUtils.class.getResourceAsStream(filepath);
+        InputStream message = com.xiao.yahoofinance.histquotes2.MessageUtils.class.getResourceAsStream(filepath);
         InputStreamReader is = new InputStreamReader(Objects.requireNonNull(message));
 
         return mapper.readTree(is);

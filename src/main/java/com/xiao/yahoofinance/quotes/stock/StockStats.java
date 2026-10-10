@@ -1,6 +1,6 @@
 package com.xiao.yahoofinance.quotes.stock;
 
-import yahoofinance.Utils;
+import com.xiao.yahoofinance.Utils;
 
 import java.math.BigDecimal;
 import java.util.Calendar;

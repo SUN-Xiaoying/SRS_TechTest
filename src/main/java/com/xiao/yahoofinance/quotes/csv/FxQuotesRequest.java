@@ -1,8 +1,8 @@
 package com.xiao.yahoofinance.quotes.csv;
 
-import yahoofinance.Utils;
-import yahoofinance.YahooFinance;
-import yahoofinance.quotes.fx.FxQuote;
+import com.xiao.yahoofinance.Utils;
+import com.xiao.yahoofinance.YahooFinance;
+import com.xiao.yahoofinance.quotes.fx.FxQuote;
 
 import java.util.ArrayList;
 import java.util.List;

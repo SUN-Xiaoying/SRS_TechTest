@@ -6,8 +6,8 @@ import lombok.experimental.FieldDefaults;
 import lombok.val;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import yahoofinance.Stock;
-import yahoofinance.Utils;
+import com.xiao.yahoofinance.Stock;
+import com.xiao.yahoofinance.Utils;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -48,7 +48,7 @@ class QuotesQuery1v7Specification extends JsonServersTest {
         val result = message.get("quoteResponse").get("result").get(0);
 
         // when:
-        Stock stock = YahooFinance.get(SHEL_SYMBOL, from, today);
+        Stock stock = YahooFinance.get(SHEL_SYMBOL);
 
         assertNotNull(stock);
         assertEquals(result.get("symbol").asText(), stock.getSymbol());
@@ -96,7 +96,7 @@ class QuotesQuery1v7Specification extends JsonServersTest {
         var results = message.get("quoteResponse").get("result");
 
         // when
-        Map<String, Stock> stocks = YahooFinance.get(new String[]{ GOOG_SYMBOL, AMZN_SYMBOL, SHEL_SYMBOL }, from, today);
+        Map<String, Stock> stocks = YahooFinance.get(new String[]{ GOOG_SYMBOL, AMZN_SYMBOL, SHEL_SYMBOL });
 
         // then
         assertEquals(3, stocks.size());
@@ -122,7 +122,7 @@ class QuotesQuery1v7Specification extends JsonServersTest {
     @Test
     void testWrongSymbolRequest() throws IOException {
 
-        Stock stock = YahooFinance.get(WRONG_SYMBOL, from, today);
+        Stock stock = YahooFinance.get(WRONG_SYMBOL);
 
         assertNull(stock);
     }

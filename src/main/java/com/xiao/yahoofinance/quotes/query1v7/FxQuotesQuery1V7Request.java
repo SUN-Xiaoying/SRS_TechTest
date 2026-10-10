@@ -1,8 +1,8 @@
 package com.xiao.yahoofinance.quotes.query1v7;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import yahoofinance.Utils;
-import yahoofinance.quotes.fx.FxQuote;
+import com.xiao.yahoofinance.Utils;
+import com.xiao.yahoofinance.quotes.fx.FxQuote;
 
 import java.math.BigDecimal;
 

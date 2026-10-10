@@ -22,16 +22,15 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
     implementation "org.springframework.boot:spring-boot-starter-thymeleaf"
     implementation "org.springframework.boot:spring-boot-starter-web"
-    implementation "com.yahoofinance-api:YahooFinanceAPI:${yahooFinanceApiVersion}"
     implementation "com.squareup.okhttp3:okhttp:${okHttp3Version}"
-    implementation "com.squareup.okhttp3:mockwebserver:${okHttp3Version}"
 
-    compileOnly "org.projectlombok:lombok"
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
     developmentOnly "org.springframework.boot:spring-boot-devtools"
 
-    annotationProcessor "org.projectlombok:lombok"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 
-    testImplementation "org.projectlombok:lombok:${lombokVersion}"
+    testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
     testImplementation "com.squareup.okhttp3:mockwebserver:${okHttp3Version}"
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude group: "junit", module: "junit"
@@ -52,6 +51,20 @@ java {
     targetCompatibility = 17
 }
 
+sourceSets {
+    test {
+        java.srcDir "src/integration-test/java"
+        resources.srcDir "src/integration-test/resources"
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 17
+}
+
 tasks.named("test") {
     useJUnitPlatform()
+    // YahooFinance caches endpoint properties in static final fields.
+    forkEvery = 1
+    maxParallelForks = 1
 }

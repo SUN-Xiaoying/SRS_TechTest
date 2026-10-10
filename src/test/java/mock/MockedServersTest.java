@@ -2,7 +2,8 @@ package mock;
 
 import okhttp3.mockwebserver.Dispatcher;
 import okhttp3.mockwebserver.MockWebServer;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterAll;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,21 +19,16 @@ public class MockedServersTest {
     public static MockWebServer quotesServer;
     public static MockWebServer histQuotesServer;
 
-    @BeforeEach
-    public void startServers() {
+    @BeforeAll
+    public static void startServers() throws IOException {
 
         if (started) {
             return;
         }
-        started = true;
         quotesServer = new MockWebServer();
         histQuotesServer = new MockWebServer();
-        try {
-            quotesServer.start();
-            histQuotesServer.start();
-        } catch (IOException e) {
-            log.error("Unable to start mock web server", e);
-        }
+        quotesServer.start();
+        histQuotesServer.start();
         String quotesBaseUrl = "http://localhost:" + quotesServer.getPort() + "/d/quotes.csv";
         String histQuotesBaseUrl = "http://localhost:" + histQuotesServer.getPort() + "/table.csv";
 
@@ -44,6 +40,13 @@ public class MockedServersTest {
         final Dispatcher dispatcher = new YahooFinanceDispatcher();
         quotesServer.setDispatcher(dispatcher);
         histQuotesServer.setDispatcher(dispatcher);
+        started = true;
     }
 
+    @AfterAll
+    public static void stopServers() throws IOException {
+        quotesServer.shutdown();
+        histQuotesServer.shutdown();
+        started = false;
+    }
 }

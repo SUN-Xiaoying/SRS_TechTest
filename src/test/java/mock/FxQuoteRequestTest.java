@@ -1,9 +1,9 @@
 package mock;
 
 import org.junit.jupiter.api.Test;
-import yahoofinance.YahooFinance;
-import yahoofinance.quotes.fx.FxQuote;
-import yahoofinance.quotes.fx.FxSymbols;
+import com.xiao.yahoofinance.YahooFinance;
+import com.xiao.yahoofinance.quotes.fx.FxQuote;
+import com.xiao.yahoofinance.quotes.fx.FxSymbols;
 
 import java.io.IOException;
 import java.math.BigDecimal;

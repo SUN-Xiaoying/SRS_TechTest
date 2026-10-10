@@ -1,16 +1,16 @@
 package com.xiao.yahoofinance;
 
-import yahoofinance.Stock;
-import yahoofinance.histquotes.HistQuotesRequest;
-import yahoofinance.histquotes.HistoricalQuote;
-import yahoofinance.histquotes.Interval;
-import yahoofinance.query2v8.HistQuotesQuery2V8Request;
-import yahoofinance.quotes.csv.FxQuotesRequest;
-import yahoofinance.quotes.csv.StockQuotesData;
-import yahoofinance.quotes.csv.StockQuotesRequest;
-import yahoofinance.quotes.fx.FxQuote;
-import yahoofinance.quotes.query1v7.FxQuotesQuery1V7Request;
-import yahoofinance.quotes.query1v7.StockQuotesQuery1V7Request;
+import com.xiao.yahoofinance.Stock;
+import com.xiao.yahoofinance.histquotes.HistQuotesRequest;
+import com.xiao.yahoofinance.histquotes.HistoricalQuote;
+import com.xiao.yahoofinance.histquotes.Interval;
+import com.xiao.yahoofinance.query2v8.HistQuotesQuery2V8Request;
+import com.xiao.yahoofinance.quotes.csv.FxQuotesRequest;
+import com.xiao.yahoofinance.quotes.csv.StockQuotesData;
+import com.xiao.yahoofinance.quotes.csv.StockQuotesRequest;
+import com.xiao.yahoofinance.quotes.fx.FxQuote;
+import com.xiao.yahoofinance.quotes.query1v7.FxQuotesQuery1V7Request;
+import com.xiao.yahoofinance.quotes.query1v7.StockQuotesQuery1V7Request;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -75,8 +75,8 @@ public class YahooFinance {
 
     /**
      * Sends a basic quotes request to Yahoo Finance. This will return a {@link Stock} object
-     * with its {@link yahoofinance.quotes.stock.StockQuote}, {@link yahoofinance.quotes.stock.StockStats}
-     * and {@link yahoofinance.quotes.stock.StockDividend} member fields
+     * with its {@link com.xiao.yahoofinance.quotes.stock.StockQuote}, {@link com.xiao.yahoofinance.quotes.stock.StockStats}
+     * and {@link com.xiao.yahoofinance.quotes.stock.StockDividend} member fields
      * filled in with the available data.
      * Returns null if the data can't be retrieved from Yahoo Finance.
      *
@@ -92,7 +92,7 @@ public class YahooFinance {
     /**
      * Same as the <code>get(String)</code> method, but with the option to include
      * historical stock quote data. Including historical data will cause the {@link Stock}
-     * object's member field {@link yahoofinance.histquotes.HistoricalQuote} to be filled in
+     * object's member field {@link com.xiao.yahoofinance.histquotes.HistoricalQuote} to be filled in
      * with the default past year term at monthly intervals.
      * Returns null if the data can't be retrieved from Yahoo Finance.
      *
@@ -196,8 +196,8 @@ public class YahooFinance {
     /**
      * Sends a basic quotes request to Yahoo Finance. This will return a {@link Map} object
      * that links the symbols to their respective {@link Stock} objects.
-     * The Stock objects have their {@link yahoofinance.quotes.stock.StockQuote}, {@link yahoofinance.quotes.stock.StockStats}
-     * and {@link yahoofinance.quotes.stock.StockDividend} member fields
+     * The Stock objects have their {@link com.xiao.yahoofinance.quotes.stock.StockQuote}, {@link com.xiao.yahoofinance.quotes.stock.StockStats}
+     * and {@link com.xiao.yahoofinance.quotes.stock.StockDividend} member fields
      * filled in with the available data.
      * <p>
      * All the information is retrieved in a single request to Yahoo Finance.
@@ -216,7 +216,7 @@ public class YahooFinance {
     /**
      * Same as the <code>get(String[])</code> method, but with the option to include
      * historical stock quote data. Including historical data will cause the {@link Stock}
-     * objects their member field {@link yahoofinance.histquotes.HistoricalQuote} to be filled in
+     * objects their member field {@link com.xiao.yahoofinance.histquotes.HistoricalQuote} to be filled in
      * with the default past year term at monthly intervals.
      * <p>
      * The latest quotes will be retrieved in a single request to Yahoo Finance.
@@ -354,7 +354,7 @@ public class YahooFinance {
 
     /**
      * Sends a request for a single FX rate.
-     * Some common symbols can easily be found in the ENUM {@link yahoofinance.quotes.fx.FxSymbols}
+     * Some common symbols can easily be found in the ENUM {@link com.xiao.yahoofinance.quotes.fx.FxSymbols}
      * Some examples of accepted symbols:
      * <ul>
      * <li> EURUSD=X

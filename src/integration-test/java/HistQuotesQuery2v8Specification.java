@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import yahoofinance.histquotes.HistoricalQuote;
+import com.xiao.yahoofinance.histquotes.HistoricalQuote;
 
 import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @FieldDefaults(level = PRIVATE)
-class HistQuotesQuery2v8Specification {
+class HistQuotesQuery2v8Specification extends jsonserver.JsonServersTest {
 
     Calendar today;
     Calendar from;
@@ -70,11 +70,29 @@ class HistQuotesQuery2v8Specification {
 
     @SneakyThrows
     @Test
-    void testThrowNullPointerException() {
+    void testIncompleteHistoryIsReported() {
 
-        assertThrows(NullPointerException.class, () -> YahooFinance.getHistQuotes("AWS", from, today));
+        assertThrows(java.io.IOException.class, () -> YahooFinance.getHistQuotes("AWS", from, today));
     }
 
+
+    @Test
+    void invalidDateRangeDoesNotSendRequest() throws Exception {
+        int before = histQuotes2v8Server.getRequestCount();
+        assertEquals(0, YahooFinance.getHistQuotes(SHEL_SYMBOL, today, from).size());
+        assertEquals(before, histQuotes2v8Server.getRequestCount());
+    }
+
+    @Test
+    void requestDoesNotMutateCallerDates() throws Exception {
+        from.set(Calendar.HOUR_OF_DAY, 17);
+        today.set(Calendar.HOUR_OF_DAY, 18);
+        Calendar originalFrom = (Calendar) from.clone();
+        Calendar originalTo = (Calendar) today.clone();
+        YahooFinance.getHistQuotes(SHEL_SYMBOL, from, today);
+        assertEquals(originalFrom, from);
+        assertEquals(originalTo, today);
+    }
 
     Calendar transDate(long timestamp) {
 

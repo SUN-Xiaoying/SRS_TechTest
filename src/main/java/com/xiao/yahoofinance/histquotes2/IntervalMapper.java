@@ -1,6 +1,6 @@
 package com.xiao.yahoofinance.histquotes2;
 
-import yahoofinance.histquotes.Interval;
+import com.xiao.yahoofinance.histquotes.Interval;
 
 
 public class IntervalMapper {

@@ -1,4 +1,4 @@
-package yahoofinance.histquotes2;
+package com.xiao.yahoofinance.histquotes2;
 
 import com.xiao.yahoofinance.histquotes2.HistQuotes2Request;
 import lombok.experimental.FieldDefaults;
@@ -6,9 +6,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import yahoofinance.Stock;
-import yahoofinance.YahooFinance;
-import yahoofinance.histquotes.Interval;
+import com.xiao.yahoofinance.Stock;
+import com.xiao.yahoofinance.YahooFinance;
+import com.xiao.yahoofinance.histquotes.Interval;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @FieldDefaults(level = PRIVATE)
-class HistQuotes2RequestTest {
+class HistQuotes2RequestTest extends jsonserver.JsonServersTest {
 
     Calendar today;
     Calendar from;
@@ -58,15 +58,19 @@ class HistQuotes2RequestTest {
 
     @ParameterizedTest
     @CsvSource({
-            "DAILY, 231",
-            "WEEKLY, 47",
-            "MONTHLY, 12"
+            "TSLA, DAILY, 252",
+            "SCTY, WEEKLY, 53",
+            "SHEL, MONTHLY, 12"
 
     })
-    void testDifferentInterval(Interval interval, int size) throws IOException, InterruptedException {
+    void testDifferentInterval(String symbol, Interval interval, int size) throws IOException, InterruptedException {
 
-        Stock stock = YahooFinance.get("SHEL", from, today, interval);
+        Stock stock = YahooFinance.get(symbol, from, today, interval);
         assertNotNull(stock.getHistory());
         assertEquals(size, stock.getHistory().size());
+        var httpRequest = histCsvServer.takeRequest(1, java.util.concurrent.TimeUnit.SECONDS);
+        assertNotNull(httpRequest);
+        String tag = com.xiao.yahoofinance.histquotes2.IntervalMapper.get(interval).getTag();
+        assertEquals(tag, httpRequest.getRequestUrl().queryParameter("interval"));
     }
 }

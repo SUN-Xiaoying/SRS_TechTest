@@ -1,13 +1,13 @@
 package com.xiao.yahoofinance.quotes.csv;
 
-import yahoofinance.Stock;
-import yahoofinance.Utils;
-import yahoofinance.exchanges.ExchangeTimeZone;
-import yahoofinance.quotes.csv.QuotesProperty;
-import yahoofinance.quotes.csv.StockQuotesRequest;
-import yahoofinance.quotes.stock.StockDividend;
-import yahoofinance.quotes.stock.StockQuote;
-import yahoofinance.quotes.stock.StockStats;
+import com.xiao.yahoofinance.Stock;
+import com.xiao.yahoofinance.Utils;
+import com.xiao.yahoofinance.exchanges.ExchangeTimeZone;
+import com.xiao.yahoofinance.quotes.csv.QuotesProperty;
+import com.xiao.yahoofinance.quotes.csv.StockQuotesRequest;
+import com.xiao.yahoofinance.quotes.stock.StockDividend;
+import com.xiao.yahoofinance.quotes.stock.StockQuote;
+import com.xiao.yahoofinance.quotes.stock.StockStats;
 
 
 public class StockQuotesData {

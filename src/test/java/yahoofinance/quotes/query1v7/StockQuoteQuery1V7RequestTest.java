@@ -1,17 +1,17 @@
-package yahoofinance.quotes.query1v7;
+package com.xiao.yahoofinance.quotes.query1v7;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import yahoofinance.Stock;
-import yahoofinance.YahooFinance;
+import com.xiao.yahoofinance.Stock;
+import com.xiao.yahoofinance.YahooFinance;
 
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class StockQuoteQuery1V7RequestTest {
+class StockQuoteQuery1V7RequestTest extends jsonserver.JsonServersTest {
 
     @Test
     void testSingleSymbolRequest() throws IOException {

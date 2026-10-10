@@ -4,11 +4,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import yahoofinance.Utils;
-import yahoofinance.YahooFinance;
-import yahoofinance.histquotes.HistoricalQuote;
-import yahoofinance.histquotes2.QueryInterval;
-import yahoofinance.util.RedirectableRequest;
+import com.xiao.yahoofinance.Utils;
+import com.xiao.yahoofinance.YahooFinance;
+import com.xiao.yahoofinance.histquotes.HistoricalQuote;
+import com.xiao.yahoofinance.histquotes2.QueryInterval;
+import com.xiao.yahoofinance.util.RedirectableRequest;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -77,8 +77,8 @@ public class HistQuotesQuery2V8Request {
         this(symbol, interval);
         this.from.setTime(from);
         this.to.setTime(to);
-        this.cleanHistCalendar(this.from);
-        this.cleanHistCalendar(this.to);
+        this.from.setTimeInMillis(this.cleanHistCalendar(this.from).getTimeInMillis());
+        this.to.setTimeInMillis(this.cleanHistCalendar(this.to).getTimeInMillis());
     }
 
     /**
@@ -88,17 +88,34 @@ public class HistQuotesQuery2V8Request {
      */
     private Calendar cleanHistCalendar(Calendar cal) {
 
+        cal = (Calendar) cal.clone();
+
         cal.set(Calendar.MILLISECOND, 0);
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.HOUR, 0);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
         return cal;
     }
 
     public List<HistoricalQuote> getResult() throws IOException {
 
+        if (from.after(to)) {
+            return new ArrayList<>();
+        }
         String json = getJson();
-        JsonNode resultNode = objectMapper.readTree(json).get("chart").get("result").get(0);
+        JsonNode root = objectMapper.readTree(json);
+        JsonNode results = root == null ? null : root.path("chart").path("result");
+        if (results == null || !results.isArray() || results.isEmpty()) {
+            throw new IOException("No historical data for " + symbol);
+        }
+        JsonNode resultNode = results.get(0);
+        if (!resultNode.path("timestamp").isArray() || resultNode.path("timestamp").isEmpty()
+                || !resultNode.path("indicators").path("quote").isArray()
+                || resultNode.path("indicators").path("quote").isEmpty()
+                || !resultNode.path("indicators").path("adjclose").isArray()
+                || resultNode.path("indicators").path("adjclose").isEmpty()) {
+            throw new IOException("Incomplete historical data for " + symbol);
+        }
         JsonNode timestamps = resultNode.get("timestamp");
         JsonNode indicators = resultNode.get("indicators");
         JsonNode quotes = indicators.get("quote").get(0);
@@ -162,16 +179,16 @@ public class HistQuotesQuery2V8Request {
         redirectableRequest.setReadTimeout(YahooFinance.CONNECTION_TIMEOUT);
         URLConnection connection = redirectableRequest.openConnection();
 
-        InputStreamReader is = new InputStreamReader(connection.getInputStream());
-        BufferedReader br = new BufferedReader(is);
-        StringBuilder builder = new StringBuilder();
-        for (String line = br.readLine(); line != null; line = br.readLine()) {
-            if (builder.length() > 0) {
-                builder.append("\n");
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(), java.nio.charset.StandardCharsets.UTF_8))) {
+            StringBuilder builder = new StringBuilder();
+            for (String line = br.readLine(); line != null; line = br.readLine()) {
+                if (builder.length() > 0) {
+                    builder.append("\n");
+                }
+                builder.append(line);
             }
-            builder.append(line);
+            return builder.toString();
         }
-        return builder.toString();
     }
 
 }

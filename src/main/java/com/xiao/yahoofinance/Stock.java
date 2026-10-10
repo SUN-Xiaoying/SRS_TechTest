@@ -2,20 +2,20 @@ package com.xiao.yahoofinance;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import yahoofinance.histquotes.HistQuotesRequest;
-import yahoofinance.histquotes.HistoricalQuote;
-import yahoofinance.histquotes.Interval;
-import yahoofinance.histquotes2.HistDividendsRequest;
-import yahoofinance.histquotes2.HistQuotes2Request;
-import yahoofinance.histquotes2.HistSplitsRequest;
-import yahoofinance.histquotes2.HistoricalDividend;
-import yahoofinance.histquotes2.HistoricalSplit;
-import yahoofinance.quotes.csv.StockQuotesData;
-import yahoofinance.quotes.csv.StockQuotesRequest;
-import yahoofinance.quotes.query1v7.StockQuotesQuery1V7Request;
-import yahoofinance.quotes.stock.StockDividend;
-import yahoofinance.quotes.stock.StockQuote;
-import yahoofinance.quotes.stock.StockStats;
+import com.xiao.yahoofinance.histquotes.HistQuotesRequest;
+import com.xiao.yahoofinance.histquotes.HistoricalQuote;
+import com.xiao.yahoofinance.histquotes.Interval;
+import com.xiao.yahoofinance.histquotes2.HistDividendsRequest;
+import com.xiao.yahoofinance.histquotes2.HistQuotes2Request;
+import com.xiao.yahoofinance.histquotes2.HistSplitsRequest;
+import com.xiao.yahoofinance.histquotes2.HistoricalDividend;
+import com.xiao.yahoofinance.histquotes2.HistoricalSplit;
+import com.xiao.yahoofinance.quotes.csv.StockQuotesData;
+import com.xiao.yahoofinance.quotes.csv.StockQuotesRequest;
+import com.xiao.yahoofinance.quotes.query1v7.StockQuotesQuery1V7Request;
+import com.xiao.yahoofinance.quotes.stock.StockDividend;
+import com.xiao.yahoofinance.quotes.stock.StockQuote;
+import com.xiao.yahoofinance.quotes.stock.StockStats;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -49,7 +49,7 @@ public class Stock {
 
         if (YahooFinance.QUOTES_QUERY1V7_ENABLED.equalsIgnoreCase("true")) {
             StockQuotesQuery1V7Request request = new StockQuotesQuery1V7Request(this.symbol);
-            yahoofinance.Stock stock = request.getSingleResult();
+            Stock stock = request.getSingleResult();
             if (stock != null) {
                 this.setName(stock.getName());
                 this.setCurrency(stock.getCurrency());
@@ -232,11 +232,11 @@ public class Stock {
      *
      * @return a list of historical quotes from this stock
      * @throws java.io.IOException when there's a connection problem
-     * @see #getHistory(yahoofinance.histquotes.Interval)
+     * @see #getHistory(com.xiao.yahoofinance.histquotes.Interval)
      * @see #getHistory(java.util.Calendar)
      * @see #getHistory(java.util.Calendar, java.util.Calendar)
-     * @see #getHistory(java.util.Calendar, yahoofinance.histquotes.Interval)
-     * @see #getHistory(java.util.Calendar, java.util.Calendar, yahoofinance.histquotes.Interval)
+     * @see #getHistory(java.util.Calendar, com.xiao.yahoofinance.histquotes.Interval)
+     * @see #getHistory(java.util.Calendar, java.util.Calendar, com.xiao.yahoofinance.histquotes.Interval)
      */
     public List<HistoricalQuote> getHistory() throws IOException {
 

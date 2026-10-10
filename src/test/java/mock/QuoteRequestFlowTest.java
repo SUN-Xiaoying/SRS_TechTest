@@ -1,8 +1,8 @@
 package mock;
 
 import org.junit.jupiter.api.Test;
-import yahoofinance.Stock;
-import yahoofinance.YahooFinance;
+import com.xiao.yahoofinance.Stock;
+import com.xiao.yahoofinance.YahooFinance;
 
 import java.io.IOException;
 import java.math.BigDecimal;

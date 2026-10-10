@@ -1,13 +1,13 @@
 package com.xiao.yahoofinance.quotes.query1v7;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import yahoofinance.Stock;
-import yahoofinance.Utils;
-import yahoofinance.exchanges.ExchangeTimeZone;
-import yahoofinance.quotes.query1v7.QuotesRequest;
-import yahoofinance.quotes.stock.StockDividend;
-import yahoofinance.quotes.stock.StockQuote;
-import yahoofinance.quotes.stock.StockStats;
+import com.xiao.yahoofinance.Stock;
+import com.xiao.yahoofinance.Utils;
+import com.xiao.yahoofinance.exchanges.ExchangeTimeZone;
+import com.xiao.yahoofinance.quotes.query1v7.QuotesRequest;
+import com.xiao.yahoofinance.quotes.stock.StockDividend;
+import com.xiao.yahoofinance.quotes.stock.StockQuote;
+import com.xiao.yahoofinance.quotes.stock.StockStats;
 
 import java.math.BigDecimal;
 import java.util.TimeZone;

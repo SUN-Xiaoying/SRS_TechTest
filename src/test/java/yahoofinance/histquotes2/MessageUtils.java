@@ -1,8 +1,8 @@
-package yahoofinance.histquotes2;
+package com.xiao.yahoofinance.histquotes2;
 
-import yahoofinance.Utils;
-import yahoofinance.YahooFinance;
-import yahoofinance.histquotes.HistoricalQuote;
+import com.xiao.yahoofinance.Utils;
+import com.xiao.yahoofinance.YahooFinance;
+import com.xiao.yahoofinance.histquotes.HistoricalQuote;
 
 import java.io.BufferedReader;
 import java.io.IOException;
